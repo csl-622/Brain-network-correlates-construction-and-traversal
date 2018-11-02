@@ -1,5 +1,8 @@
-The first part of this project is creating the concept graph 
+STEP1::The first part of this project is creating the concept graph 
 
 What is concept graph?
 ---It is a graph of the words among which there are edges if those words are connected like mother and love and we can for sure say that there can never be an edge between mother and kill
    so the links would be in this manner
+---The concept graph is created using the WIKI data dump as it contains almost every word.
+
+STEP2::The next part would be collecting the data of which part of the brain would be activated when a word is used.
