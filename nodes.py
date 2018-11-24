@@ -10,18 +10,33 @@ import time
 edgePairs = {}
     #strengths = []
 count = 0
+nodes = []
 print(count)
 loadString = "edgepair_strength.txt"
 with open(loadString, encoding='utf-8',errors="ignore") as fp:
 	for line in fp:
 		single_esp = line.rstrip().split('\t\t')
 		value = float(single_esp[2])
+		
 		item_pair = single_esp[0] + "\t" +single_esp[1]
 		if item_pair in edgePairs:
 			edgePairs[item_pair] = edgePairs[item_pair] + value
 		else:
 			edgePairs[item_pair] = value
 		count +=1
+		temp1 = single_esp[0]
+		temp2 = single_esp[1]
+		if temp1 not in nodes:
+			nodes.append(temp1)
+		if temp2 not in nodes:
+			nodes.append(temp2)
+
+print(nodes)
+print(len(nodes))
+#there are 12163 nodes in the gutenberg data list created 
+
+
+'''
 temp = edgePairs
 #count +=1
 print(count)
@@ -74,21 +89,16 @@ for key in edgePairs:
 		after3[key] = after2[key]
 
 
-
-
-
-
-
-
-
-
-
-
-
 final = 0
 for key in after:
 	final +=1	
 print(final)
-print(count2)	
+print(count2)
+'''
+
+
+
+
+	
 
 
