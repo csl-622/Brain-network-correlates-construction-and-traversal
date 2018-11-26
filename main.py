@@ -141,9 +141,13 @@ def merge_edges():
     folder_name = "edgepairs"
     for fileName in listdir(folder_name):
         print(count)
-        loadString = "edgepairs/edgepair_strength_" + str(count) + ".txt"
+        loadString = "sorted/sorted_edgeList_" + str(count) + ".txt"
         with open(loadString, encoding='utf-8',errors="ignore") as fp:
+            lines = 0
             for line in fp:
+                lines += 1
+                if lines>=8000:
+                    break
                 single_esp = line.rstrip().split('\t')
                 value = float(single_esp[2])
                 item_pair = single_esp[0] + "\t" +single_esp[1]
@@ -163,12 +167,39 @@ def merge_edges():
         else: file.write(str(eps[i][0]) + '\t' + str(eps[i][1]) + '\n')
     file.close()
 
+def sort_individual(fileName,count):
+    edgePairs = {}
+    loadString = "edgepairs/" + fileName
+    with open(loadString, encoding='utf-8',errors="ignore") as fp:
+        for line in fp:
+            single_esp = line.rstrip().split('\t')
+            value = float(single_esp[2])
+            item_pair = single_esp[0] + "\t" +single_esp[1]
+            if item_pair in edgePairs:
+                edgePairs[item_pair] = edgePairs[item_pair] + value
+            else:
+                edgePairs[item_pair] = value
+    eps = []
+    for key, value in edgePairs.items():
+        eps.append([key,value])
+    eps.sort(key=lambda elem: elem[1],reverse=True)
+    fileNameEP = "sorted/sorted_edgeList_" + str(count+1) + ".txt" 
+    file = open(fileNameEP,'w+')
+    for i in range(len(edgePairs)):
+        if i<len(edgePairs): file.write(str(eps[i][0]) + '\t' + str(eps[i][1]) + '\n')
+        else: file.write(str(eps[i][0]) + '\t' + str(eps[i][1]) + '\n')
+    print(count)
+    file.close()
+
+    
+
 def performTask():
     st = time.time()
     number_of_workers = 8
     folder_name = "inputBooks"
-    count = 0
-    fileNames = []
+    #count = 0
+    #fileNames = []
+    """
     for fileName in listdir(folder_name):
         fileNames.append(fileName)
         count +=1
@@ -178,7 +209,17 @@ def performTask():
     books = [x for x in range(0,count)]
     with Pool(number_of_workers) as p:
         p.map(calculate_strength,books)
-    #merge_edges()
+    count = 0
+    fileNames = []
+    folder2 = "edgepairs"
+    for fileName in listdir(folder2):
+        fileNames.append(fileName)
+        count +=1
+    comb_tuples = [(fileNames[x],x) for x in range(0,count)]
+    with Pool(number_of_workers) as p:
+        p.starmap(sort_individual,comb_tuples)
+    """
+    merge_edges()
     et = time.time()
     print("\nIt took "+gethumantime(et-st))
 
