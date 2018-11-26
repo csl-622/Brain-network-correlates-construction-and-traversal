@@ -146,7 +146,7 @@ def merge_edges():
             lines = 0
             for line in fp:
                 lines += 1
-                if lines>=8000:
+                if lines>=5000:
                     break
                 single_esp = line.rstrip().split('\t')
                 value = float(single_esp[2])
@@ -195,11 +195,11 @@ def sort_individual(fileName,count):
 
 def performTask():
     st = time.time()
+    """
     number_of_workers = 8
     folder_name = "inputBooks"
-    #count = 0
-    #fileNames = []
-    """
+    count = 0
+    fileNames = []
     for fileName in listdir(folder_name):
         fileNames.append(fileName)
         count +=1
