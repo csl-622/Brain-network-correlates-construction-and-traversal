@@ -4,9 +4,11 @@ import pickle
 from multiprocessing import Pool
 
 def calc_short_distances(fileName,count):
-    print(count+1)
+    #print(count+1)
+    
     loadString = "processedTestBooks/" + fileName
-    with open('concept_graph', 'rb') as fp:
+    print(loadString)
+    with open('concept_graph_maxconnected', 'rb') as fp:
         G = pickle.load(fp)
     shortest_paths = []
     with open(loadString,'rb') as fp:
