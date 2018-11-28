@@ -31,22 +31,28 @@ def get_adjacent_distances(fileName,count):
 	
 def generate_random_number_list(count):
 	random_sizeList = []
+	with open('concept_graph_maxconnected', 'rb') as fp:
+		G = pickle.load(fp)
+	nodeList = list(nx.nodes(G))
 	for i in range(count):
 		r_no = random.randint(100,100000)
 		random_sizeList.append(r_no)
-	with open('concept_graph_maxconnected', 'rb') as fp:
-		G = pickle.load(fp)
-	nodeslist = list(nx.nodes(G))
-	random_pick1 =  random.choice(nodeList)
 	for i in range(count):
-		random_number_list = []
+		random_pick1 =  random.choice(nodeList)
+		random_node_list = []
+		random_node_list.append(random_pick1)
+		random_node_distance_list = []
 		for j in range(random_sizeList[i]):
-			random_pick2 = random.choice(list(set(nodeList)-set(random_pick1)))
+			random_pick2 = random.choice(nodeList)
 			adj_path_len = nx.shortest_path_length(G,source=random_pick1,target=random_pick2)
-			random_number_list.append()
+			random_node_distance_list.append(adj_path_len)
 			random_pick1 = random_pick2
-		saveString = "random_number_list/numberSet" + str(i+1)
-		while open(saveString, 'wb') as fp: pickle.dump(random_number_list,fp)
+			random_node_list.append(random_pick1)
+		saveString = "random_node_list/nodeSet" + str(i+1)
+		with open(saveString, 'wb') as fp: pickle.dump(random_node_list, fp)
+		saveString = "random_node_distance_list/distanceSet" + str(i+1)
+		with open(saveString, 'wb') as fp: pickle.dump(random_node_distance_list, fp)
+		print("Generated Sequence " + str(i+1))
 	
 def performTask():
 	st = time.time()
@@ -60,6 +66,7 @@ def performTask():
 	comb_tuples = [(fileNames[x],x) for x in range(0,count)]
 	with Pool(number_of_workers) as p:
 		p.starmap(get_adjacent_distances,comb_tuples)
+	generate_random_number_list(count)
 	et = time.time()
 	print("\nIt took "+gethumantime(et-st))
 
