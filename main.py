@@ -195,7 +195,7 @@ def sort_individual(fileName,count):
 
 def performTask():
     st = time.time()
-    """
+
     number_of_workers = 8
     folder_name = "inputBooks"
     count = 0
@@ -218,7 +218,7 @@ def performTask():
     comb_tuples = [(fileNames[x],x) for x in range(0,count)]
     with Pool(number_of_workers) as p:
         p.starmap(sort_individual,comb_tuples)
-    """
+
     merge_edges()
     et = time.time()
     print("\nIt took "+gethumantime(et-st))

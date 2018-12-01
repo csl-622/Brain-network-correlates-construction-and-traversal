@@ -1,10 +1,10 @@
 import networkx as nx
 import matplotlib.pyplot as plt
-G = nx.read_weighted_edgelist('edgepairs_n_strength2.txt')
+G = nx.read_weighted_edgelist('short_merged.txt')
 print('Data Loaded')
 nodeList = list(G.nodes())
 edgeList = list(G.edges())
-threshold = 350
+threshold = 7000
 removeList = []
 print('Removing Weak Components')
 for item in edgeList:
